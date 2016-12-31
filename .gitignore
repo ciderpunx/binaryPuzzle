@@ -1,0 +1,6 @@
+.*.swp
+.swp
+.stack-work
+src/PrivateConfig.hs
+firebase_deets.json
+todos.sqlite

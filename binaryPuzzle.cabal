@@ -15,7 +15,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Lib
+  exposed-modules:     BinaryPuzzle
   build-depends:       base >= 4.7 && < 5
                      , MissingH
   default-language:    Haskell2010
@@ -33,6 +33,9 @@ test-suite binaryPuzzle-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
+  other-modules:       Grids0
+                     , Grids1
+                     , Grids2
   build-depends:       base
                      , binaryPuzzle
                      , MissingH

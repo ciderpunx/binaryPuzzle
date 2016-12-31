@@ -1,4 +1,4 @@
-module BinaryPuzzle (Grid, solve, printGrid) where
+module BinaryPuzzle (Grid, solve, printGrid, solvedGrid) where
 
 import Control.Monad (replicateM)
 import Data.List (isInfixOf,transpose,group,sort)
@@ -8,6 +8,18 @@ import Data.String.Utils
 type Row    = String
 type Grid   = [Row]
 type Matrix = [Grid]
+
+unsolvableGrid :: Grid
+unsolvableGrid =
+    [ "_______0"
+    , "10010110"
+    , "_0___1_0"
+    , "__1_____"
+    , "00_1__1_"
+    , "____1___"
+    , "11___0_1"
+    , "_1_____1"
+    ]
 
 main :: IO()
 main = printGrid $ solve g14'
@@ -21,6 +33,11 @@ maxPSDumb = 1000
 problemSpace :: Matrix -> Int
 problemSpace = product . map length
 
+
+-- head that returns empty for an empty list
+headS [] = []
+headS xs = head xs
+
 -- First we apply deterministic rules so that we can reduce the
 -- problem space as much as possible. Then we generate a "matrix" of
 -- possible rows for the remaining problem space.
@@ -31,7 +48,7 @@ problemSpace = product . map length
 solve :: Grid -> Grid
 solve g =
     if probSpace < maxPSDumb
-    then head . filter solvedGrid $ cp' pgs
+    then headS . filter solvedGrid $ cp' pgs
     else solveSlow (betterGrid g pgs)
   where
     pgs       = possibles g
@@ -42,7 +59,7 @@ solve g =
 -- puzzles.
 solveSlow :: Grid -> Grid
 solveSlow g =
-    concat . head $ trim g
+    concat . headS $ trim g
 
 -- Cartesian product of a matrix - used in our slow algorithm to construct all
 -- possible grids from a matrix
@@ -288,11 +305,9 @@ printGrid = mapM_ putStrLn
 safe :: Grid -> Bool
 safe g =  all noTriples (cols g)
        && all noTriples g
-       && all oneZeroSameIfNotBlank (cols g)
-       && all oneZeroSameIfNotBlank g
        && all nonempty g
-  where
-    oneZeroSameIfNotBlank r = bLen r /= 0 || oneLen r == zeroLen r
+
+oneZeroSameIfNotBlank r = nbLen r == 0 || oneLen r == zeroLen r
 
 nonempty :: Row -> Bool
 nonempty [] = False

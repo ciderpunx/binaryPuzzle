@@ -9,22 +9,8 @@ type Row    = String
 type Grid   = [Row]
 type Matrix = [Grid]
 
-unsolvableGrid :: Grid
-unsolvableGrid =
-    [ "_______0"
-    , "10010110"
-    , "_0___1_0"
-    , "__1_____"
-    , "00_1__1_"
-    , "____1___"
-    , "11___0_1"
-    , "_1_____1"
-    ]
-
-main :: IO()
-main = printGrid $ solve g14'
-
 -- max problem space to look at with dumb algorithim
+maxPSDumb :: Int
 maxPSDumb = 1000
 
 -- Calculate the problem space of a matrix - how many rows you would need to try
@@ -312,20 +298,3 @@ oneZeroSameIfNotBlank r = nbLen r == 0 || oneLen r == zeroLen r
 nonempty :: Row -> Bool
 nonempty [] = False
 nonempty _ = True
-
--- binarypuzzle.com 14^2 v.hard board 1
-g14'  = [ "____10_______1"
-        , "1____0___1_1_1"
-        , "__1___1_______"
-        , "0____11____0_1"
-        , "0_0_____1____1"
-        , "_0______0_____"
-        , "__1______1__1_"
-        , "__1_0__1__0___"
-        , "_____1_1____1_"
-        , "0_10_1____0___"
-        , "__1_______00__"
-        , "___0__________"
-        , "_1_______0____"
-        , "__0___0____0__"
-        ]

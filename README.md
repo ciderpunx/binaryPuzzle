@@ -41,7 +41,7 @@ $ stack run test/testGridFile.txt
 10010101011010
 ```
 
-The solved Binary Puzzle is from a Dutch puzzle book that I came across. You have to input puzzles manually in app/Main (which is quite annoying) I will maybe make a nice way to input puzzles one day.
+The solved Binary Puzzle is from a Dutch puzzle book that I came across.
 
 The [BinaryPuzzle.com](https://www.binarypuzzle.com/) site has a bunch of puzzles, updated daily. You can provide a URL from that site (limited to the "/puzzles.php" ones for now) to solve it. This is a bit beta and untested!
 

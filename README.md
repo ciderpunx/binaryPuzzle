@@ -11,7 +11,7 @@ You need stack installed
 Then git clone:
 
 ```
-git clone https://github.com/ciderpunx/binaryPuzzle.git
+$ git clone https://github.com/ciderpunx/binaryPuzzle.git
 ```
 
 Then run with stack. The first run will install many things.
@@ -46,7 +46,7 @@ The solved Binary Puzzle is from a Dutch puzzle book that I came across.
 The [BinaryPuzzle.com](https://www.binarypuzzle.com/) site has a bunch of puzzles, updated daily. You can provide a URL from that site (limited to the "/puzzles.php" ones for now) to solve it. This is a bit beta and untested!
 
 ```
-stack run "https://www.binarypuzzle.com/puzzles.php?size=14&level=3&nr=8"
+$ stack run "https://www.binarypuzzle.com/puzzles.php?size=14&level=3&nr=8"
 11010011001100
 00110110011001
 00101101100110
@@ -66,7 +66,7 @@ stack run "https://www.binarypuzzle.com/puzzles.php?size=14&level=3&nr=8"
 You can run the tests if you want:
 
 ```
-stack test
+$ stack test
 ```
 
 You can build an executable:

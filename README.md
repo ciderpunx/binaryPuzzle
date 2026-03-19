@@ -5,7 +5,7 @@ This is a Haskell program to solve binary puzzles, or binary sudoku like those y
 You need stack installed
 
 ```
-# app install haskell-stack
+# apt install haskell-stack
 ```
 
 Then git clone:

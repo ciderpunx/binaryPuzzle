@@ -1,9 +1,28 @@
 module Main where
 
+import System.Environment (getArgs)
+import Data.List (isPrefixOf)
 import BinaryPuzzle
 
 main :: IO ()
-main = printGrid $ solve g
+main = do
+  args <- getArgs
+  case args of
+      [filename] -> do
+           grid <- getGrid filename
+           printGrid $ solve grid
+      _ -> putStrLn "Usage: binaryPuzzle <filename>"
+
+getGrid :: String -> IO Grid
+getGrid filename
+  | "https://www.binarypuzzle.com/puzzles.php" `isPrefixOf` filename
+    = getFromWeb filename
+  | otherwise
+    = readGrid filename
+
+
+example :: IO ()
+example = printGrid $ solve g
 
 -- From a dutch puzzle book 0.5 seconds in ghci
 g :: Grid

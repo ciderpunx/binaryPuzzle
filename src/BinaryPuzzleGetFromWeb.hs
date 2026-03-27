@@ -15,13 +15,11 @@ import BinaryPuzzleGrids (Grid, printGrid)
 getFromWeb :: String -> IO Grid
 getFromWeb url = do
     response <- httpLBS (parseRequest_ url)
-    let body = getResponseBody response
-    let tags = parseTags (L8.unpack body)
-
-    let cells = extractCells tags
-    let size  = inferSize (length cells)
-    let grid  = chunk size cells
-
+    let body  = getResponseBody response
+        tags  = parseTags (L8.unpack body)
+        cells = extractCells tags
+        size  = inferSize (length cells)
+        grid  = chunk size cells
     return grid
 
 -- Write the puzzle from the binary puzzles site
@@ -44,8 +42,8 @@ extractCells tags =
 isPuzzleDiv :: Tag String -> Bool
 isPuzzleDiv (TagOpen "div" attrs) =
     case lookup "id" attrs of
-        Just cid -> "cel_" `isInfixOf` cid
-        _        -> False
+      Just cid -> "cel_" `isInfixOf` cid
+      _        -> False
 isPuzzleDiv _ = False
 
 extractValue :: [Tag String] -> Char
@@ -70,4 +68,3 @@ chunk :: Int -> [a] -> [[a]]
 chunk n xs
     | null xs   = []
     | otherwise = take n xs : chunk n (drop n xs)
-

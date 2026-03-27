@@ -8,10 +8,9 @@ import BinaryPuzzleGrids
 -- Given a grid, apply rules to it recursively until we cannot
 -- apply any futher rules
 applyBasicRules :: Grid -> Grid
-applyBasicRules g =
-    if thisRun == g -- can't make further progress
-    then g
-    else applyBasicRules thisRun
+applyBasicRules g 
+    | thisRun == g = g -- can't make further progress
+    | otherwise    = applyBasicRules thisRun
   where
     thisRun   = transpose . apCols $ apRows g
     apCols rs = apRows (cols rs)
@@ -44,6 +43,9 @@ apLeftIdRules n g
     | n > (length g `div` 2) = g
     | otherwise              = apLeftIdRules (n-1) (identicalLeftRule n g)
 
+-- If the remaining n spaces are all blank and equal to the difference
+-- between the counts of 1s and 0s then fill the blanks with the digit of
+-- which there are fewest. Or if not just pass the unchanged grid back.
 identicalLeftRule :: Int -> Grid -> Grid
 identicalLeftRule n =
     map repl
@@ -70,6 +72,9 @@ replaceIndex n x xs
     | n < 0 || n > length xs - 1 = error "Index out of bounds"
     | otherwise                  = take n xs ++ x : drop (n+1) xs
 
+-- If there are 2 spaces left in a row then try filling with 1,0
+-- or 0,1 and see if we produce a safeGrid, If we do then we can
+-- pass the modified  row back, if not, the original.
 twoDifferentLeftRule :: Grid -> Grid
 twoDifferentLeftRule g =
     map (twoDifferentLeftRule' g) $ zip [0..] g

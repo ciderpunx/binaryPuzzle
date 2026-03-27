@@ -14,13 +14,13 @@ import BinaryPuzzleGrids (Grid, printGrid)
 -- Get a puzzle from the binary puzzles site
 getFromWeb :: String -> IO Grid
 getFromWeb url = do
-    response <- httpLBS (parseRequest_ url)
-    let body  = getResponseBody response
-        tags  = parseTags (L8.unpack body)
-        cells = extractCells tags
-        size  = inferSize (length cells)
-        grid  = chunk size cells
-    return grid
+  response <- httpLBS (parseRequest_ url)
+  let body  = getResponseBody response
+      tags  = parseTags (L8.unpack body)
+      cells = extractCells tags
+      size  = inferSize (length cells)
+      grid  = chunk size cells
+  return grid
 
 -- Write the puzzle from the binary puzzles site
 getFromWebAndMakeFile :: String -> String -> IO ()
@@ -35,26 +35,26 @@ exampleGetFromWebAndMakeFile =
 
 extractCells :: [Tag String] -> [Char]
 extractCells tags =
-    [ extractValue block
-    | block <- partitions isPuzzleDiv tags
-    ]
+  [ extractValue block
+  | block <- partitions isPuzzleDiv tags
+  ]
 
 isPuzzleDiv :: Tag String -> Bool
 isPuzzleDiv (TagOpen "div" attrs) =
-    case lookup "id" attrs of
-      Just cid -> "cel_" `isInfixOf` cid
-      _        -> False
+  case lookup "id" attrs of
+    Just cid -> "cel_" `isInfixOf` cid
+    _        -> False
 isPuzzleDiv _ = False
 
 extractValue :: [Tag String] -> Char
 extractValue ts =
-    case dropWhile (~/= TagOpen ("p"::String) []) ts of
-        (TagOpen "p" _ : TagText txt : _) ->
-            case trim txt of
-                "0" -> '0'
-                "1" -> '1'
-                _   -> '_'
-        _ -> '_'
+  case dropWhile (~/= TagOpen ("p"::String) []) ts of
+    (TagOpen "p" _ : TagText txt : _) ->
+      case trim txt of
+        "0" -> '0'
+        "1" -> '1'
+        _   -> '_'
+      _ -> '_'
 
 trim :: String -> String
 trim = f . f
@@ -62,9 +62,9 @@ trim = f . f
 
 inferSize :: Int -> Int
 inferSize total =
-    floor (sqrt (fromIntegral total :: Double))
+  floor (sqrt (fromIntegral total :: Double))
 
 chunk :: Int -> [a] -> [[a]]
 chunk n xs
-    | null xs   = []
-    | otherwise = take n xs : chunk n (drop n xs)
+  | null xs   = []
+  | otherwise = take n xs : chunk n (drop n xs)

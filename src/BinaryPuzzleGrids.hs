@@ -17,7 +17,7 @@ module BinaryPuzzleGrids
   , zeroLen
   ) where
 
-import Data.List (transpose, isInfixOf, nub)
+import Data.List (transpose, intersperse, isInfixOf, nub)
 import Data.Maybe (listToMaybe)
 
 type Row    = String
@@ -39,7 +39,7 @@ cols = transpose
 
 -- Print the content of a grid
 printGrid :: Grid -> IO ()
-printGrid = mapM_ putStrLn
+printGrid = mapM_ (putStrLn . intersperse ' ')
 
 -- A uniqGrid has all columns and all rows unique
 uniqGrid :: Grid -> Bool

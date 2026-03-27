@@ -54,7 +54,7 @@ extractValue ts =
         "0" -> '0'
         "1" -> '1'
         _   -> '_'
-      _ -> '_'
+    _ -> '_'
 
 trim :: String -> String
 trim = f . f

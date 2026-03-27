@@ -70,10 +70,9 @@ trim g =
 -- Given a matrix, return a list of matrices where each of the variants of the smallest
 -- (non-single) row of the original matrix is installed in one of the new matrices
 expandMatrix :: Matrix -> [Matrix]
-expandMatrix rows =
-    if null $ counts rows
-    then [rows]
-    else [ row1 ++ ([c] : row2) | c <- cs]
+expandMatrix rows
+    | null $ counts rows = [rows]
+    | otherwise          = [ row1 ++ ([c] : row2) | c <- cs]
   where
     (row1, cs : row2) = break smallest rows
     smallest cs'      = length cs' == n
@@ -84,7 +83,8 @@ expandMatrix rows =
 -- ie. does the matrix have only a single grid in it
 -- If so return the first row in the grid, otherwise return the original row
 betterGrid :: Grid -> Matrix -> Grid
-betterGrid = zipWith hwelce
+betterGrid =
+    zipWith hwelce
   where
     hwelce g [x] = x
     hwelce g _   = g
@@ -132,4 +132,3 @@ uniqueOnSingles ms =
                else m) ms
   where
     us = concat $ filter ((==1) . length) ms
-
